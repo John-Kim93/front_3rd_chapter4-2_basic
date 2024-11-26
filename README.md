@@ -27,6 +27,10 @@ LCP는 웹 페이지의 주요 성능 지표 중 하나로, 페이지 로딩 과
 
 - [iLoveIMG](https://www.iloveimg.com/ko/resize-image/resize-jpg) 사이트를 이용하여 이미지 사이즈를 25% 축소하였습니다.
 
+#### 2. 이미지 확장자 변경 jpg -> webp
+
+- [cloudconvert](https://cloudconvert.com/jpg-to-webp) 사이트를 이용하여 이미지 확장자를 jpg에서 webp로 변경하였습니다.
+
 ---
 
 ### 개선 결과
@@ -35,3 +39,4 @@ LCP는 웹 페이지의 주요 성능 지표 중 하나로, 페이지 로딩 과
 | -------------------- | ---------- |
 | 개선 전              | **14.65s** |
 | oversize 이미지 축소 | **12.91s** |
+| 이미지 확장자 변경   | **7.73s**  |
