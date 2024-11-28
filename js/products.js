@@ -65,15 +65,16 @@ function displayProducts(products) {
 
 }
 
+let loadStatus = 'idle';
 window.onload = () => {
-    let status = 'idle';
 
     let productSection = document.querySelector('#all-products');
 
     window.onscroll = () => {
-        let position = productSection.getBoundingClientRect().top - (window.scrollY + window.innerHeight);
+        let position = productSection.getBoundingClientRect().height - (window.scrollY + window.innerHeight);
 
-        if (status == 'idle' && position <= 0) {
+        if (loadStatus == 'idle' && position <= 0) {
+            loadStatus = 'working'
             loadProducts();
 
             // Simulate heavy operation. It could be a complex price calculation. <-- need to improve this
@@ -97,8 +98,11 @@ function someHeavyCalculation() {
             for (let i = 0; i < MAX_ITER; i++) {
                 const temp = Math.sqrt(i) * Math.sqrt(i);
             }
-            console.log('Heavy calculation end.');
-            resolve();
+            setTimeout(() => {
+                console.log('Heavy calculation end.');
+                loadStatus = 'idle'
+                resolve();
+            }, 1000)
         })
     }
 
