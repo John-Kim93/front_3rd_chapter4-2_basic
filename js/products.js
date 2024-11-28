@@ -65,12 +65,43 @@ function displayProducts(products) {
 
 }
 
+window.onload = () => {
+    let status = 'idle';
 
+    let productSection = document.querySelector('#all-products');
 
-loadProducts();
+    window.onscroll = () => {
+        let position = productSection.getBoundingClientRect().top - (window.scrollY + window.innerHeight);
 
-// Simulate heavy operation. It could be a complex price calculation.
-for (let i = 0; i < 10000000; i++) {
-    const temp = Math.sqrt(i) * Math.sqrt(i);
+        if (status == 'idle' && position <= 0) {
+            loadProducts();
+
+            // Simulate heavy operation. It could be a complex price calculation. <-- need to improve this
+            // This is a blocking operation that will freeze the UI
+            // how to improve this: https://ko.javascript.info/event-loop <-- use event loop
+            someHeavyCalculation();
+        }
+    }
+}
+
+function someHeavyCalculation() {
+    const MAX_ITER = 10_000_000;
+
+    /** 
+     * 무거운 작업을 비동기 작업으로 처리함으로써 첫 페이지 로딩 시간을 빠르게 가져갈 수 있다.
+     * 여기서 계산을 Promise로 처리하면 작업이 nonblock-async로 실행된다.
+     * 완료 시 microtask-queue에 적재되고 event loop를 타고 순차적으로 메인 쓰레드에서 실행된다.
+     */ 
+    function processCalc() {
+        return new Promise((resolve) => {
+            for (let i = 0; i < MAX_ITER; i++) {
+                const temp = Math.sqrt(i) * Math.sqrt(i);
+            }
+            console.log('Heavy calculation end.');
+            resolve();
+        })
+    }
+
+    processCalc();
 }
 
